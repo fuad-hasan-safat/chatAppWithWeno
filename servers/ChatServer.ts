@@ -21,6 +21,7 @@ export default class ChatServer {
       this.clientDisconnected(socket.username);
     };
     socket.onmessage = (m) => {
+      console.log("m in chat messege --->", m);
       this.send(socket.username, m);
     };
     this.connectedClients.set(username, socket);

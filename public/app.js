@@ -5,6 +5,8 @@ const socket = new WebSocket(url);
 
 socket.onmessage = (event) => {
   const data = JSON.parse(event.data);
+  console.log('row data --', event.data);
+  console.log('parsed data--', data)
 
   switch (data.event) {
     case "update-users":
@@ -31,9 +33,9 @@ function updateUserList(usernames) {
 function addMessage(username, message) {
   const template = document.getElementById("message");
   const clone = template.content.cloneNode(true);
-
+  const date = new Date()
   clone.querySelector("span").textContent = username;
-  clone.querySelector("p").textContent = ':' + message;
+  clone.querySelector("p").textContent = date.getHours()+":" + date.getMinutes() + ": " + message;
   document.getElementById("conversation").prepend(clone);
 }
 

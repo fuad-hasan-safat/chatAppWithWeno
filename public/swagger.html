@@ -1,0 +1,21 @@
+<!-- public/swagger.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat API Documentation</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.11.1/swagger-ui.min.css">
+</head>
+<body>
+  <div id="swagger-ui"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.11.1/swagger-ui-bundle.min.js"></script>
+  <script>
+    window.onload = () => {
+      SwaggerUIBundle({
+        url: "http://localhost:3000/swagger.json", // The path to the generated Swagger JSON file
+        dom_id: '#swagger-ui',
+      });
+    };
+  </script>
+</body>
+</html>

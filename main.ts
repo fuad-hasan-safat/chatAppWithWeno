@@ -11,6 +11,7 @@ import UserRegistration from "./controllers/registration.ts";
 import { registerMiddleware } from "./middlewares/registration.ts";
 import { loginMiddleware } from "./middlewares/login.ts";
 import { login } from "./controllers/login.ts";
+import userRouter from "./router/user.ts";
 
 const app = new Application();
 const port = 3000;
@@ -26,6 +27,8 @@ router.post("/login", loginMiddleware, async (ctx: Context) => {
 
 router.get("/start_web_socket", (ctx: Context) => server.handleConnection(ctx));
 
+router.use(userRouter.routes());
+router.use(userRouter.allowedMethods());
 app.use(router.routes());
 app.use(router.allowedMethods());
 app.use(async (context) => {

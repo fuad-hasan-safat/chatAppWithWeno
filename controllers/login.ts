@@ -1,8 +1,8 @@
 import { Context } from "https://deno.land/x/oak@v12.4.0/mod.ts";
-import { create, getNumericDate } from "https://deno.land/x/djwt@v2.2/mod.ts";
-import { encode } from "@gz/jwt";
+import { create } from "https://deno.land/x/djwt@v3.0.2/mod.ts";
 import client from "../database/index.ts";
 import { comparePassword, hashPassword } from "../utils/hash.ts"; // Assume hash utility
+import key from "../utils/jwtkey.ts";
 
 const SECRET_KEY = Deno.env.get("HASH_SECRET") as string;
 
@@ -40,12 +40,12 @@ export async function login(ctx: Context) {
 
     const payload = { id: user.id, username: user.username, email: user.email };
 
-    const token = await encode(payload, "secret", { algorithm: "HS256" });
+    const jwt = await create({ alg: "HS512", typ: "JWT" }, payload, key);
 
     ctx.response.status = 200;
     ctx.response.body = {
         username: user.username,
         email: user.email,
-        token: token,
+        token: jwt,
     };
 }

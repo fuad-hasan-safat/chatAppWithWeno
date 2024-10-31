@@ -14,12 +14,12 @@ export default class ChatServer {
     const socket = await ctx.upgrade() as WebSocketWithUsername;
     const username = ctx.request.url.searchParams.get("username");
 
-    if (this.connectedClients.has(username)) {
+    if (this.connectedClients.has(username as string)) {
       socket.close(1008, `Username ${username} is already taken`);
       return;
     }
 
-    socket.username = username;
+    socket.username = username as string;
     socket.onopen = this.broadcastUsernames.bind(this);
     socket.onclose = () => {
       this.clientDisconnected(socket.username);
@@ -28,7 +28,7 @@ export default class ChatServer {
       console.log("m in chat messege --->", m);
       this.send(socket.username, m);
     };
-    this.connectedClients.set(username, socket);
+    this.connectedClients.set(username as string, socket);
 
     console.log(`New client connected: ${username}`);
   }
